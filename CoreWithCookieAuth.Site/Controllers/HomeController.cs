@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreWithCookieAuth.Site.Controllers
@@ -10,6 +11,7 @@ namespace CoreWithCookieAuth.Site.Controllers
     {
         public IActionResult Index() => View();
 
+        [Authorize(Policy = "ReadPolicy")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -17,6 +19,7 @@ namespace CoreWithCookieAuth.Site.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

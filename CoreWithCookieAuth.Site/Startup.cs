@@ -28,7 +28,17 @@ namespace CoreWithCookieAuth.Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ReadPolicy", policyBuilder =>
+                {
+                    policyBuilder.RequireAuthenticatedUser()
+                        .RequireAssertion(context => context.User.HasClaim("Read", "true"))
+                        .Build();
+                });
+            });
+            
+            //Add framework services.
             services.AddMvc();
         }
 
@@ -50,8 +60,8 @@ namespace CoreWithCookieAuth.Site
             
             app.UseCookieAuthentication(new CookieAuthenticationOptions()  
             {
-                AuthenticationScheme = "MyCookieMiddlewareInstance",
-                LoginPath = new PathString("/Account/Login/"),
+                AuthenticationScheme = "Cookies",
+                LoginPath = new PathString("/Account/"),
                 AccessDeniedPath = new PathString("/Account/Forbidden/"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
