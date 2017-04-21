@@ -29,7 +29,7 @@ namespace CoreWithCookieAuth.Site.Controllers
 
                 var claimsIdentity = new ClaimsIdentity(claims, "password");
                 var claimsPrinciple = new ClaimsPrincipal(claimsIdentity);
-
+                
                 HttpContext.Authentication.SignInAsync("Cookies", claimsPrinciple);
 
                 return Redirect("~/");
