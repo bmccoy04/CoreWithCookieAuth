@@ -15,7 +15,7 @@ namespace CoreWithCookieAuth.Site.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
+            var s = HttpContext.User.Identity.IsAuthenticated;
             return View();
         }
 
